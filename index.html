@@ -23,6 +23,8 @@
             --border: #e2e8f0;
             --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --success: #10b981;
+            --warning: #f59e0b;
         }
 
         body {
@@ -464,7 +466,7 @@
             box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4);
         }
 
-        /* Experience Section */
+        /* Experience Section Enhanced */
         .experience-timeline {
             position: relative;
             padding-left: 3rem;
@@ -488,6 +490,7 @@
             border-radius: 20px;
             box-shadow: var(--card-shadow);
             transition: all 0.3s ease;
+            border: 1px solid var(--border);
         }
 
         .experience-item::before {
@@ -519,6 +522,7 @@
         .experience-item:hover {
             transform: translateX(10px);
             box-shadow: 0 20px 40px rgba(99, 102, 241, 0.15);
+            border-color: var(--primary);
         }
 
         .experience-header {
@@ -557,9 +561,9 @@
         .experience-bullets li {
             position: relative;
             padding-left: 1.5rem;
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;
             color: var(--text);
-            line-height: 1.6;
+            line-height: 1.7;
         }
 
         .experience-bullets li::before {
@@ -568,6 +572,73 @@
             left: 0;
             color: var(--primary);
             font-weight: bold;
+        }
+
+        /* Impact Metrics */
+        .impact-metrics {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .metric {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .metric.cost-savings {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(34, 197, 94, 0.1));
+            color: var(--success);
+        }
+
+        .metric.efficiency {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(251, 191, 36, 0.1));
+            color: var(--warning);
+        }
+
+        /* Tech Stack Pills */
+        .tech-stack {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .tech-stack-label {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+        }
+
+        .tech-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tech-pill {
+            background: var(--light);
+            color: var(--dark);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .tech-pill:hover {
+            background: var(--gradient);
+            color: white;
+            border-color: transparent;
+            transform: translateY(-2px);
         }
 
         /* Projects Section */
@@ -867,7 +938,7 @@
                 3+ years architecting NLP and production ML systems for Fortune 500 companies. 
                 Expert in LLMs, transformers, and MLOps. Delivered 15+ models with 85-92% accuracy, 
                 including RAG systems that reduced query time by 87%. Passionate about leveraging AI 
-                to solve complex business challenges.
+                to solve complex business challenges with $170K+ in documented business value delivered.
             </p>
             <div class="hero-buttons">
                 <a href="#projects" class="btn btn-primary">
@@ -1055,6 +1126,7 @@
         <p class="section-subtitle">Building AI solutions that make a difference</p>
         
         <div class="experience-timeline">
+            <!-- Wells Fargo Experience -->
             <div class="experience-item">
                 <div class="experience-header">
                     <div>
@@ -1063,46 +1135,141 @@
                     </div>
                     <span class="experience-date">May 2024 - Present</span>
                 </div>
+                
+                <div class="impact-metrics">
+                    <span class="metric">📊 92% F1-Score</span>
+                    <span class="metric efficiency">⚡ 87% Faster Queries</span>
+                    <span class="metric cost-savings">💰 40% Cost Reduction</span>
+                    <span class="metric">🎯 89% Accuracy</span>
+                </div>
+
                 <ul class="experience-bullets">
-                    <li>Architected text summarization module using fine-tuned T5, processing 500+ weekly call transcripts with 89% accuracy</li>
-                    <li>Engineered NER pipeline for regulatory documents using spaCy and BERT, achieving 92% F1-score on 2K+ monthly documents</li>
-                    <li>Optimized sentiment analysis with FinBERT on 10K financial conversations, improving negative sentiment detection by 31%</li>
-                    <li>Developed RAG system using LangChain and Azure OpenAI with Pinecone, reducing response time by 87%</li>
-                    <li>Implemented A/B testing framework comparing GPT-4 vs Claude, identifying 40% cost reduction opportunity</li>
+                    <li><strong>Text Summarization System:</strong> Architected module using fine-tuned T5, processing 500+ weekly call transcripts via Azure Cognitive Services to identify recurring customer issues with 89% accuracy, reducing manual review by 3 hours weekly</li>
+                    <li><strong>NER Pipeline for Compliance:</strong> Engineered named entity recognition pipeline for regulatory documents using spaCy and domain-adapted BERT with Weights & Biases tracking, extracting entities from 2K+ monthly documents achieving 92% F1-score, deployed via Docker/Kubernetes</li>
+                    <li><strong>Sentiment Analysis Optimization:</strong> Fine-tuned FinBERT on 10K financial conversations, analyzing 15K+ monthly interactions through batch processing with MLflow tracking, improving negative sentiment detection by 31%</li>
+                    <li><strong>RAG System Development:</strong> Built retrieval-augmented generation system using LangChain and Azure OpenAI Service with Pinecone vector database, utilizing DVC for data versioning, handling 200+ test queries with 85% accuracy and 87% reduction in response time</li>
+                    <li><strong>A/B Testing Framework:</strong> Implemented comparison framework for GPT-4 vs Claude API on 100 document samples, conducting statistical analysis that identified 40% cost reduction opportunity while maintaining accuracy</li>
+                    <li><strong>Automated NLP Deployment:</strong> Streamlined pipeline using Azure DevOps and Docker, integrating with MLflow model registry, processing 8K+ documents monthly with 99.9% uptime</li>
+                    <li><strong>Multilingual Analysis:</strong> Built prototype for Spanish customer feedback using mT5, preprocessing 500+ reviews monthly with NLTK, achieving 88% accuracy in sentiment classification</li>
+                    <li><strong>Inference Optimization:</strong> Accelerated latency through batch processing and caching strategies, achieving 3x speed improvement while reducing API costs by 25% on pilot deployment</li>
                 </ul>
+
+                <div class="tech-stack">
+                    <div class="tech-stack-label">🔧 Technologies & Tools Used:</div>
+                    <div class="tech-pills">
+                        <span class="tech-pill">Python</span>
+                        <span class="tech-pill">T5</span>
+                        <span class="tech-pill">BERT</span>
+                        <span class="tech-pill">FinBERT</span>
+                        <span class="tech-pill">mT5</span>
+                        <span class="tech-pill">spaCy</span>
+                        <span class="tech-pill">LangChain</span>
+                        <span class="tech-pill">Azure Cognitive Services</span>
+                        <span class="tech-pill">Azure OpenAI</span>
+                        <span class="tech-pill">Pinecone</span>
+                        <span class="tech-pill">Docker</span>
+                        <span class="tech-pill">Kubernetes</span>
+                        <span class="tech-pill">MLflow</span>
+                        <span class="tech-pill">Weights & Biases</span>
+                        <span class="tech-pill">DVC</span>
+                        <span class="tech-pill">Azure DevOps</span>
+                        <span class="tech-pill">NLTK</span>
+                        <span class="tech-pill">GPT-4</span>
+                        <span class="tech-pill">Claude API</span>
+                    </div>
+                </div>
             </div>
 
+            <!-- Unify AI Experience -->
             <div class="experience-item">
                 <div class="experience-header">
                     <div>
                         <h3 class="experience-title">Open-Source ML Engineer</h3>
-                        <p class="experience-company">Unify AI (Ivy Framework) - Remote</p>
+                        <p class="experience-company">Unify AI (Ivy Framework - 14.2K+ GitHub Stars) - Remote</p>
                     </div>
                     <span class="experience-date">July 2022 - February 2023</span>
                 </div>
+                
+                <div class="impact-metrics">
+                    <span class="metric">⭐ 14.2K+ Stars</span>
+                    <span class="metric efficiency">🚀 3x Performance</span>
+                    <span class="metric">✅ 100% Test Coverage</span>
+                    <span class="metric cost-savings">📉 80% Error Reduction</span>
+                </div>
+
                 <ul class="experience-bullets">
-                    <li>Standardized backend operations across PyTorch, TensorFlow, and JAX, reducing conversion errors by 80%</li>
-                    <li>Engineered neural network API with gradient computation support, achieving 100% test coverage</li>
-                    <li>Optimized 12+ numerical computation functions, improving performance by 3x</li>
-                    <li>Contributed to Ivy transpiler enabling TensorFlow to PyTorch model conversion</li>
+                    <li><strong>Cross-Framework Standardization:</strong> Standardized backend operations across PyTorch, TensorFlow, and JAX, reducing cross-framework conversion errors by 80% for operations handled through 20+ resolved issues</li>
+                    <li><strong>Neural Network API Development:</strong> Engineered comprehensive API implementing 3 activation functions (ELU, CELU, Mish) with gradient computation support, achieving 100% test coverage</li>
+                    <li><strong>Performance Optimization:</strong> Optimized 12+ numerical computation functions through vectorization and framework-specific improvements, improving performance by 3x and numerical stability</li>
+                    <li><strong>Framework Compatibility:</strong> Resolved array protocol compatibility issues and stochastic operation testing, creating unified seeding mechanism for reproducible tests across frameworks</li>
+                    <li><strong>Transpiler Development:</strong> Contributed to PyTorch backend components for Ivy transpiler enabling TensorFlow to PyTorch model conversion workflows</li>
                 </ul>
+
+                <div class="tech-stack">
+                    <div class="tech-stack-label">🔧 Technologies & Tools Used:</div>
+                    <div class="tech-pills">
+                        <span class="tech-pill">Python</span>
+                        <span class="tech-pill">PyTorch</span>
+                        <span class="tech-pill">TensorFlow</span>
+                        <span class="tech-pill">JAX</span>
+                        <span class="tech-pill">NumPy</span>
+                        <span class="tech-pill">Git/GitHub</span>
+                        <span class="tech-pill">Unit Testing</span>
+                        <span class="tech-pill">CI/CD</span>
+                        <span class="tech-pill">Open Source</span>
+                        <span class="tech-pill">Neural Networks</span>
+                        <span class="tech-pill">Gradient Computation</span>
+                    </div>
+                </div>
             </div>
 
+            <!-- Nifty Labs Experience -->
             <div class="experience-item">
                 <div class="experience-header">
                     <div>
                         <h3 class="experience-title">Data Scientist</h3>
-                        <p class="experience-company">Nifty Labs Pvt Ltd - Hyderabad, India</p>
+                        <p class="experience-company">Nifty Labs Pvt Ltd (Pharmaceutical Manufacturer) - Hyderabad, India</p>
                     </div>
                     <span class="experience-date">September 2021 - May 2023</span>
                 </div>
+                
+                <div class="impact-metrics">
+                    <span class="metric cost-savings">💰 $94,100 Saved</span>
+                    <span class="metric">🛡️ $42,200 Protected</span>
+                    <span class="metric efficiency">⚡ 58% Faster</span>
+                    <span class="metric">📈 697% ROI</span>
+                </div>
+
                 <ul class="experience-bullets">
-                    <li>Pioneered automated document processing using BERT for 100+ GMP batch records with 89% accuracy</li>
-                    <li>Architected real-time data pipeline with Apache Airflow, reducing reporting time by 58%</li>
-                    <li>Developed Random Forest yield prediction model delivering $36,400 value through 1.8% improvement</li>
-                    <li>Implemented hybrid anomaly detection preventing batch failure worth $42,200</li>
-                    <li>Led AWS cloud migration achieving 697% ROI over 1.75 years ($94,100 total value)</li>
+                    <li><strong>Automated Document Processing:</strong> Pioneered system using BERT and custom NER for 100+ GMP batch records, achieving 89% accuracy while reducing manual review by 40%</li>
+                    <li><strong>Real-time Data Pipeline:</strong> Architected integration of Oracle MES/MySQL LIMS using Apache Airflow, processing 3,456 daily data points with 58% reduction in reporting time</li>
+                    <li><strong>Yield Prediction Model:</strong> Developed Random Forest model on 200+ historical batches achieving 72% accuracy, delivering $36,400 value through 1.8% pharmaceutical API yield improvement</li>
+                    <li><strong>Anomaly Detection System:</strong> Implemented hybrid approach combining Statistical Process Control with Isolation Forest, monitoring 30-second interval sensor data, preventing batch failure worth $42,200</li>
+                    <li><strong>Process Optimization:</strong> Streamlined monitoring using PCA to reduce parameters from 18 to 8 while maintaining 94% correlation, improving operator efficiency by 32% (saving $2,880 annually)</li>
+                    <li><strong>Analytics Dashboards:</strong> Created Tableau dashboards for 6 QC analysts integrating LIMS data, reducing batch review time by 15% and achieving zero critical observations in USFDA audit</li>
+                    <li><strong>Cloud Migration Leadership:</strong> Led AWS migration (S3, Lambda, RDS) reducing infrastructure costs by 30% while establishing MLOps foundation, achieving 697% ROI over 1.75 years ($94,100 total value)</li>
                 </ul>
+
+                <div class="tech-stack">
+                    <div class="tech-stack-label">🔧 Technologies & Tools Used:</div>
+                    <div class="tech-pills">
+                        <span class="tech-pill">Python</span>
+                        <span class="tech-pill">BERT</span>
+                        <span class="tech-pill">Random Forest</span>
+                        <span class="tech-pill">Isolation Forest</span>
+                        <span class="tech-pill">Apache Airflow</span>
+                        <span class="tech-pill">Oracle MES</span>
+                        <span class="tech-pill">MySQL</span>
+                        <span class="tech-pill">PCA</span>
+                        <span class="tech-pill">Statistical Process Control</span>
+                        <span class="tech-pill">Tableau</span>
+                        <span class="tech-pill">AWS S3</span>
+                        <span class="tech-pill">AWS Lambda</span>
+                        <span class="tech-pill">AWS RDS</span>
+                        <span class="tech-pill">NER</span>
+                        <span class="tech-pill">LIMS Integration</span>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1113,7 +1280,7 @@
         <p class="section-subtitle">Real-world applications showcasing my technical expertise</p>
         
         <div class="projects-grid">
-            <div class="project-card">
+            <div class="project-card" onclick="window.open('https://github.com/Ajay6601/FraudDetectX', '_blank')">
                 <div class="project-header">
                     <h3>FraudDetectX</h3>
                     <div class="project-tech">
@@ -1131,14 +1298,14 @@
                         Deployed to Google Kubernetes Engine with 70% faster deployment cycles.
                     </p>
                     <div class="project-links">
-                        <a href="https://github.com/Ajay6601/FraudDetectX"  class="project-link">
+                        <a href="https://github.com/Ajay6601/FraudDetectX" target="_blank" class="project-link">
                             <span>View on GitHub</span> →
                         </a>
                     </div>
                 </div>
             </div>
 
-            <div class="project-card">
+            <div class="project-card" onclick="window.open('https://github.com/Ajay6601/video-platform', '_blank')">
                 <div class="project-header">
                     <h3>Video Platform</h3>
                     <div class="project-tech">
@@ -1154,14 +1321,14 @@
                         and content recommendation system using collaborative filtering.
                     </p>
                     <div class="project-links">
-                        <a href="https://github.com/Ajay6601/video-platform" class="project-link">
+                        <a href="https://github.com/Ajay6601/video-platform" target="_blank" class="project-link">
                             <span>View on GitHub</span> →
                         </a>
                     </div>
                 </div>
             </div>
 
-            <div class="project-card">
+            <div class="project-card" onclick="window.open('https://github.com/Ajay6601/doccollab', '_blank')">
                 <div class="project-header">
                     <h3>DocCollab Platform</h3>
                     <div class="project-tech">
@@ -1177,14 +1344,14 @@
                         Features include version control, user presence indicators, and automatic saving.
                     </p>
                     <div class="project-links">
-                        <a href="https://github.com/Ajay6601/doccollab"  class="project-link">
+                        <a href="https://github.com/Ajay6601/doccollab" target="_blank" class="project-link">
                             <span>View on GitHub</span> →
                         </a>
                     </div>
                 </div>
             </div>
 
-            <div class="project-card">
+            <div class="project-card" onclick="window.open('https://github.com/Ajay6601/Ecommerce-Analytics', '_blank')">
                 <div class="project-header">
                     <h3>E-commerce Analytics</h3>
                     <div class="project-tech">
@@ -1200,14 +1367,14 @@
                         and recommendation engine. Processes millions of transactions for actionable insights.
                     </p>
                     <div class="project-links">
-                        <a href="https://github.com/Ajay6601/Ecommerce-Analytics"  class="project-link">
+                        <a href="https://github.com/Ajay6601/Ecommerce-Analytics" target="_blank" class="project-link">
                             <span>View on GitHub</span> →
                         </a>
                     </div>
                 </div>
             </div>
 
-            <div class="project-card">
+            <div class="project-card" onclick="window.open('https://github.com/Ajay6601/kubernetes-mlops', '_blank')">
                 <div class="project-header">
                     <h3>Kubernetes MLOps</h3>
                     <div class="project-tech">
@@ -1230,7 +1397,7 @@
                 </div>
             </div>
 
-            <div class="project-card">
+            <div class="project-card" onclick="window.open('https://github.com/Ajay6601/remotesync', '_blank')">
                 <div class="project-header">
                     <h3>RemoteSync</h3>
                     <div class="project-tech">
@@ -1424,4 +1591,3 @@
     </script>
 </body>
 </html>
-
