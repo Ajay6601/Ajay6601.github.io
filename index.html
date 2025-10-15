@@ -12,19 +12,22 @@
         }
 
         :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --secondary: #8b5cf6;
-            --accent: #ec4899;
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary: #7c3aed;
+            --accent: #06b6d4;
             --dark: #0f172a;
             --dark-secondary: #1e293b;
             --light: #f8fafc;
-            --text: #64748b;
+            --text: #475569;
             --border: #e2e8f0;
-            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --gradient: linear-gradient(135deg, #0891b2 0%, #2563eb 50%, #7c3aed 100%);
+            --gradient-alt: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --card-shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
             --success: #10b981;
             --warning: #f59e0b;
+            --error: #ef4444;
         }
 
         body {
@@ -145,7 +148,7 @@
             min-height: 90vh;
             display: flex;
             align-items: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #0891b2 0%, #2563eb 50%, #7c3aed 100%);
             position: relative;
             overflow: hidden;
         }
@@ -373,10 +376,11 @@
 
         .filter-btn.active,
         .filter-btn:hover {
-            background: var(--gradient);
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
             color: white;
             border-color: transparent;
             transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.3);
         }
 
         .skills-grid {
@@ -431,7 +435,7 @@
         }
 
         .skill-tag {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
             color: white;
             padding: 0.4rem 1rem;
             border-radius: 20px;
@@ -469,142 +473,323 @@
         /* Experience Section Enhanced */
         .experience-timeline {
             position: relative;
-            padding-left: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 0;
         }
 
         .experience-timeline::before {
             content: '';
             position: absolute;
-            left: 15px;
+            left: 50%;
+            transform: translateX(-50%);
             top: 0;
             bottom: 0;
             width: 2px;
-            background: var(--gradient);
+            background: linear-gradient(180deg, #0891b2 0%, #2563eb 50%, #7c3aed 100%);
+        }
+
+        /* Timeline Progress Indicator */
+        .timeline-progress {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
+            width: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+            height: 0;
+            transition: height 2s ease;
+            z-index: 1;
         }
 
         .experience-item {
             position: relative;
-            margin-bottom: 3rem;
-            background: white;
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: var(--card-shadow);
-            transition: all 0.3s ease;
-            border: 1px solid var(--border);
+            width: 48%;
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
         }
 
-        .experience-item::before {
+        .experience-item:nth-child(odd) {
+            left: 0;
+            text-align: right;
+            padding-right: 3rem;
+        }
+
+        .experience-item:nth-child(even) {
+            left: 52%;
+            padding-left: 3rem;
+        }
+
+        .experience-item:nth-child(1) { animation-delay: 0.2s; }
+        .experience-item:nth-child(2) { animation-delay: 0.4s; }
+        .experience-item:nth-child(3) { animation-delay: 0.6s; }
+
+        /* Timeline Node */
+        .timeline-node {
+            position: absolute;
+            top: 30px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            border: 4px solid var(--primary);
+            z-index: 2;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .experience-item:nth-child(odd) .timeline-node {
+            right: -10px;
+        }
+
+        .experience-item:nth-child(even) .timeline-node {
+            left: -10px;
+        }
+
+        .timeline-node:hover {
+            transform: scale(1.3);
+            border-color: var(--accent);
+            box-shadow: 0 0 20px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Timeline Node Pulse */
+        .timeline-node::after {
             content: '';
             position: absolute;
-            left: -38px;
-            top: 30px;
-            width: 12px;
-            height: 12px;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
             border-radius: 50%;
-            background: var(--primary);
-            border: 3px solid white;
-            box-shadow: 0 0 0 3px var(--primary);
-            animation: pulse 2s infinite;
+            border: 2px solid var(--primary);
+            opacity: 0;
+            animation: pulse-ring 2s infinite;
         }
 
-        @keyframes pulse {
+        @keyframes pulse-ring {
             0% {
-                box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7);
-            }
-            70% {
-                box-shadow: 0 0 0 10px rgba(99, 102, 241, 0);
+                transform: scale(0.8);
+                opacity: 1;
             }
             100% {
-                box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+                transform: scale(1.3);
+                opacity: 0;
             }
         }
 
-        .experience-item:hover {
-            transform: translateX(10px);
-            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.15);
+        /* Experience Card */
+        .experience-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .experience-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.05), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .experience-card:hover::before {
+            left: 100%;
+        }
+
+        .experience-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
             border-color: var(--primary);
         }
 
+        /* Arrow Connector */
+        .experience-item:nth-child(odd) .experience-card::after {
+            content: '';
+            position: absolute;
+            right: -15px;
+            top: 30px;
+            width: 0;
+            height: 0;
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+            border-left: 15px solid white;
+            z-index: 1;
+        }
+
+        .experience-item:nth-child(even) .experience-card::after {
+            content: '';
+            position: absolute;
+            left: -15px;
+            top: 30px;
+            width: 0;
+            height: 0;
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+            border-right: 15px solid white;
+            z-index: 1;
+        }
+
+        /* Header Redesign */
         .experience-header {
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .experience-role-company {
             display: flex;
-            justify-content: space-between;
-            align-items: start;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .experience-item:nth-child(even) .experience-role-company {
+            align-items: flex-start;
+        }
+
+        .experience-item:nth-child(odd) .experience-role-company {
+            align-items: flex-end;
         }
 
         .experience-title {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             color: var(--dark);
             font-weight: 700;
+            line-height: 1.2;
+            margin: 0;
         }
 
         .experience-company {
             color: var(--primary);
             font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .experience-date {
-            color: var(--text);
-            font-size: 0.9rem;
-            background: var(--light);
-            padding: 0.3rem 1rem;
-            border-radius: 20px;
-        }
-
-        .experience-bullets {
-            list-style: none;
-            margin-top: 1rem;
-        }
-
-        .experience-bullets li {
-            position: relative;
-            padding-left: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--text);
-            line-height: 1.7;
-        }
-
-        .experience-bullets li::before {
-            content: '▸';
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-            font-weight: bold;
-        }
-
-        /* Impact Metrics */
-        .impact-metrics {
-            display: flex;
-            gap: 1rem;
-            margin: 1.5rem 0;
-            flex-wrap: wrap;
-        }
-
-        .metric {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
-            padding: 0.5rem 1rem;
-            border-radius: 15px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--primary-dark);
+            font-size: 1.1rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
 
+        .company-type {
+            font-size: 0.85rem;
+            color: var(--text);
+            font-weight: 400;
+        }
+
+        .experience-date {
+            display: inline-block;
+            margin-top: 0.5rem;
+            color: var(--text);
+            font-size: 0.9rem;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(139, 92, 246, 0.08));
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        /* Impact Metrics Redesign */
+        .impact-metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.8rem;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.03), rgba(139, 92, 246, 0.03));
+            border-radius: 15px;
+        }
+
+        .experience-item:nth-child(odd) .impact-metrics {
+            text-align: left;
+        }
+
+        .metric {
+            background: white;
+            padding: 0.6rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            border: 1px solid rgba(37, 99, 235, 0.15);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .metric:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+        }
+
         .metric.cost-savings {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(34, 197, 94, 0.1));
+            background: white;
             color: var(--success);
+            border: 1px solid rgba(16, 185, 129, 0.15);
         }
 
         .metric.efficiency {
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(251, 191, 36, 0.1));
+            background: white;
             color: var(--warning);
+            border: 1px solid rgba(245, 158, 11, 0.15);
         }
 
-        /* Tech Stack Pills */
+        /* Bullets Redesign */
+        .experience-bullets {
+            list-style: none;
+            margin-top: 1.5rem;
+            text-align: left;
+        }
+
+        .experience-bullets li {
+            position: relative;
+            padding: 0.8rem 0 0.8rem 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+            line-height: 1.6;
+            font-size: 0.95rem;
+            border-left: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .experience-bullets li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            top: 0.8rem;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .experience-bullets li:hover {
+            padding-left: 2.5rem;
+            border-left-color: var(--primary);
+            background: linear-gradient(90deg, rgba(37, 99, 235, 0.03) 0%, transparent 100%);
+        }
+
+        .experience-bullets li strong {
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        /* Tech Stack Redesign */
         .tech-stack {
             margin-top: 1.5rem;
             padding-top: 1.5rem;
@@ -615,30 +800,81 @@
             font-weight: 600;
             color: var(--primary);
             margin-bottom: 0.8rem;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .tech-pills {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
+            gap: 0.4rem;
+            text-align: left;
         }
 
         .tech-pill {
-            background: var(--light);
-            color: var(--dark);
-            padding: 0.3rem 0.8rem;
-            border-radius: 15px;
-            font-size: 0.85rem;
-            border: 1px solid var(--border);
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(139, 92, 246, 0.08));
+            color: var(--primary-dark);
+            padding: 0.25rem 0.7rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(37, 99, 235, 0.15);
             transition: all 0.3s ease;
+            font-weight: 500;
         }
 
         .tech-pill:hover {
-            background: var(--gradient);
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
             color: white;
             border-color: transparent;
-            transform: translateY(-2px);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.3);
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .experience-timeline::before {
+                left: 30px;
+            }
+
+            .timeline-progress {
+                left: 30px;
+            }
+
+            .experience-item {
+                width: 100%;
+                padding-left: 60px !important;
+                padding-right: 0 !important;
+                text-align: left !important;
+                left: 0 !important;
+            }
+
+            .timeline-node {
+                left: 20px !important;
+                right: auto !important;
+            }
+
+            .experience-item .experience-card::after {
+                left: -15px !important;
+                right: auto !important;
+                border-left: none !important;
+                border-right: 15px solid white !important;
+            }
+
+            .experience-item .experience-role-company {
+                align-items: flex-start !important;
+            }
+
+            .impact-metrics {
+                grid-template-columns: 1fr;
+                text-align: left !important;
+            }
+
+            .experience-timeline {
+                padding-left: 0;
+            }
         }
 
         /* Projects Section */
@@ -682,7 +918,7 @@
         }
 
         .project-header {
-            background: var(--gradient);
+            background: linear-gradient(135deg, #0891b2 0%, #2563eb 50%, #7c3aed 100%);
             padding: 2rem;
             position: relative;
         }
@@ -933,12 +1169,12 @@
         <div class="particles" id="particles"></div>
         <div class="hero-content">
             <h1 id="heroName">Ajay Sai Reddy Desireddy</h1>
-            <p class="subtitle">Machine Learning Engineer | AI Specialist</p>
+            <p class="subtitle">Machine Learning Engineer | Production AI Systems Specialist</p>
             <p class="hero-description">
-                3+ years architecting NLP and production ML systems for Fortune 500 companies. 
-                Expert in LLMs, transformers, and MLOps. Delivered 15+ models with 85-92% accuracy, 
-                including RAG systems that reduced query time by 87%. Passionate about leveraging AI 
-                to solve complex business challenges with $170K+ in documented business value delivered.
+                I transform complex business challenges into scalable AI solutions. With 3+ years building production ML systems, 
+                I've saved companies $180K+ annually through strategic LLM optimization, improved model accuracy by 40%, 
+                and deployed systems processing 200GB+ monthly. From cutting inference costs 75% to achieving 0.87 AUC 
+                on critical financial decisions, I deliver measurable impact through intelligent automation.
             </p>
             <div class="hero-buttons">
                 <a href="#projects" class="btn btn-primary">
@@ -958,31 +1194,36 @@
 
     <!-- About Section -->
     <section id="about" class="fade-in">
-        <h2 class="section-title">About Me</h2>
+        <h2 class="section-title">Who I Am</h2>
         <p class="section-subtitle">
-            Transforming data into intelligent solutions that drive business value
+            Building intelligent systems that deliver real business value
         </p>
         <div style="max-width: 800px; margin: 0 auto; text-align: center; line-height: 1.8; color: var(--text);">
+            <p style="font-size: 1.15rem; font-weight: 500; color: var(--dark); margin-bottom: 1.5rem;">
+                "I'm the engineer who turns your AI vision into production reality."
+            </p>
             <p>
-                I'm a Machine Learning Engineer with extensive experience in developing and deploying 
-                production-ready AI systems. Completed my Master's at Northeastern University 
-                while working with Wells Fargo to revolutionize financial services through advanced NLP 
-                and generative AI solutions.
+                Currently at Synchrony Financial, I'm revolutionizing financial services by cutting LLM costs 75% while 
+                improving accuracy 40%. My expertise spans from architecting RAG systems that handle thousands of queries 
+                to building fraud detection pipelines processing 100K+ transactions in real-time.
             </p>
             <br>
             <p>
-                My expertise spans from building RAG systems with LangChain and fine-tuning transformer 
-                models to implementing robust MLOps pipelines with Docker/Kubernetes on cloud platforms. 
-                I've delivered significant business value, including $94,100 in savings through process 
-                optimization and preventing $42,200 in potential losses through anomaly detection systems.
+                What sets me apart? I don't just build models—I deliver business outcomes. Whether it's saving $180K 
+                annually through strategic optimization, preventing $42K in potential losses through anomaly detection, 
+                or reducing manual review time by 67%, I focus on creating AI solutions that directly impact your bottom line.
+            </p>
+            <br>
+            <p style="font-weight: 500; color: var(--primary);">
+                Graduating from Northeastern University (May 2025) | Open to new opportunities
             </p>
         </div>
     </section>
 
     <!-- Skills Section -->
     <section id="skills" class="fade-in">
-        <h2 class="section-title">Technical Skills</h2>
-        <p class="section-subtitle">My technical toolkit for building intelligent systems</p>
+        <h2 class="section-title">Technical Arsenal</h2>
+        <p class="section-subtitle">Tools I use to build production-grade AI systems</p>
         
         <!-- Skill Filter Buttons -->
         <div class="skill-filter">
@@ -997,11 +1238,11 @@
                 <div class="skill-category" data-category="all">
                     <h3>💻 Programming Languages</h3>
                     <div class="skill-tags">
-                        <span class="skill-tag">Python (Advanced)</span>
-                        <span class="skill-tag">SQL</span>
+                        <span class="skill-tag">Python (Expert)</span>
                         <span class="skill-tag">Java</span>
-                        <span class="skill-tag">JavaScript</span>
-                        <span class="skill-tag">Bash/Shell</span>
+                        <span class="skill-tag">Go</span>
+                        <span class="skill-tag">TypeScript</span>
+                        <span class="skill-tag">SQL</span>
                     </div>
                 </div>
 
@@ -1010,110 +1251,90 @@
                     <div class="skill-tags">
                         <span class="skill-tag">PyTorch</span>
                         <span class="skill-tag">TensorFlow</span>
-                        <span class="skill-tag">Hugging Face</span>
-                        <span class="skill-tag">JAX</span>
+                        <span class="skill-tag">Transformers</span>
                         <span class="skill-tag">Scikit-learn</span>
                         <span class="skill-tag">XGBoost</span>
-                        <span class="skill-tag">LightGBM</span>
-                        <span class="skill-tag">spaCy</span>
-                        <span class="skill-tag">NLTK</span>
+                        <span class="skill-tag">BERT</span>
+                        <span class="skill-tag">Hugging Face</span>
                     </div>
                 </div>
 
                 <div class="skill-category" data-category="ai">
-                    <h3>🧠 Generative AI & LLMs</h3>
+                    <h3>🧠 LLMs & RAG Systems</h3>
                     <div class="skill-tags">
                         <span class="skill-tag">LangChain</span>
                         <span class="skill-tag">LlamaIndex</span>
-                        <span class="skill-tag">OpenAI API</span>
-                        <span class="skill-tag">Anthropic API</span>
                         <span class="skill-tag">GPT-4</span>
-                        <span class="skill-tag">Claude</span>
-                        <span class="skill-tag">RAG Systems</span>
-                        <span class="skill-tag">Pinecone</span>
+                        <span class="skill-tag">Llama-3.1</span>
                         <span class="skill-tag">ChromaDB</span>
-                        <span class="skill-tag">Fine-tuning</span>
-                        <span class="skill-tag">Prompt Engineering</span>
+                        <span class="skill-tag">FAISS</span>
+                        <span class="skill-tag">Pinecone</span>
+                        <span class="skill-tag">RAG Architecture</span>
                     </div>
                 </div>
 
                 <div class="skill-category" data-category="tools">
-                    <h3>⚙️ MLOps & Deployment</h3>
+                    <h3>⚙️ MLOps & Infrastructure</h3>
                     <div class="skill-tags">
                         <span class="skill-tag">Docker</span>
                         <span class="skill-tag">Kubernetes</span>
-                        <span class="skill-tag">Azure DevOps</span>
-                        <span class="skill-tag">GitHub Actions</span>
                         <span class="skill-tag">MLflow</span>
-                        <span class="skill-tag">Weights & Biases</span>
-                        <span class="skill-tag">Apache Airflow</span>
-                        <span class="skill-tag">A/B Testing</span>
-                        <span class="skill-tag">Model Monitoring</span>
-                        <span class="skill-tag">DVC</span>
+                        <span class="skill-tag">Airflow</span>
+                        <span class="skill-tag">FastAPI</span>
+                        <span class="skill-tag">Kafka</span>
+                        <span class="skill-tag">CI/CD</span>
+                        <span class="skill-tag">Terraform</span>
                     </div>
                 </div>
 
                 <div class="skill-category" data-category="cloud">
-                    <h3>☁️ Cloud & Big Data</h3>
+                    <h3>☁️ Cloud Platforms</h3>
                     <div class="skill-tags">
-                        <span class="skill-tag">Azure Cognitive Services</span>
-                        <span class="skill-tag">Azure ML Studio</span>
                         <span class="skill-tag">AWS SageMaker</span>
-                        <span class="skill-tag">AWS S3</span>
-                        <span class="skill-tag">PySpark</span>
-                        <span class="skill-tag">Apache Kafka</span>
-                        <span class="skill-tag">Databricks</span>
-                        <span class="skill-tag">Redis</span>
+                        <span class="skill-tag">AWS Bedrock</span>
+                        <span class="skill-tag">GCP Vertex AI</span>
+                        <span class="skill-tag">GKE</span>
+                        <span class="skill-tag">BigQuery</span>
+                        <span class="skill-tag">Azure ML</span>
+                        <span class="skill-tag">S3</span>
+                        <span class="skill-tag">EC2</span>
                     </div>
                 </div>
 
                 <div class="skill-category" data-category="cloud">
                     <h3>🔧 Data Engineering</h3>
                     <div class="skill-tags">
-                        <span class="skill-tag">ETL/ELT</span>
                         <span class="skill-tag">Apache Spark</span>
-                        <span class="skill-tag">Feature Engineering</span>
-                        <span class="skill-tag">Data Pipelines</span>
-                        <span class="skill-tag">Data Versioning</span>
+                        <span class="skill-tag">Delta Lake</span>
+                        <span class="skill-tag">PostgreSQL</span>
+                        <span class="skill-tag">MongoDB</span>
+                        <span class="skill-tag">Neo4j</span>
+                        <span class="skill-tag">Redis</span>
+                        <span class="skill-tag">AWS Glue</span>
                     </div>
                 </div>
 
                 <div class="skill-category" data-category="ai">
-                    <h3>📊 NLP & Specialized</h3>
+                    <h3>📊 Model Optimization</h3>
                     <div class="skill-tags">
-                        <span class="skill-tag">BERT</span>
-                        <span class="skill-tag">T5</span>
-                        <span class="skill-tag">GPT Models</span>
-                        <span class="skill-tag">Named Entity Recognition</span>
-                        <span class="skill-tag">Sentiment Analysis</span>
-                        <span class="skill-tag">Text Summarization</span>
-                        <span class="skill-tag">Time Series Analysis</span>
-                        <span class="skill-tag">Anomaly Detection</span>
-                    </div>
-                </div>
-
-                <div class="skill-category" data-category="tools">
-                    <h3>📈 Analysis & Visualization</h3>
-                    <div class="skill-tags">
+                        <span class="skill-tag">ONNX</span>
+                        <span class="skill-tag">TensorRT</span>
+                        <span class="skill-tag">Quantization</span>
+                        <span class="skill-tag">vLLM</span>
+                        <span class="skill-tag">Flash Attention</span>
+                        <span class="skill-tag">FSDP</span>
                         <span class="skill-tag">A/B Testing</span>
-                        <span class="skill-tag">Statistical Process Control</span>
-                        <span class="skill-tag">PCA</span>
-                        <span class="skill-tag">Tableau</span>
-                        <span class="skill-tag">Power BI</span>
-                        <span class="skill-tag">Matplotlib</span>
                     </div>
                 </div>
 
                 <div class="skill-category" data-category="tools">
-                    <h3>🛠️ Development Tools</h3>
+                    <h3>📈 Monitoring & Analytics</h3>
                     <div class="skill-tags">
-                        <span class="skill-tag">Jupyter</span>
-                        <span class="skill-tag">Git/GitHub</span>
-                        <span class="skill-tag">VS Code</span>
-                        <span class="skill-tag">Docker Desktop</span>
-                        <span class="skill-tag">Conda</span>
-                        <span class="skill-tag">Linux</span>
-                        <span class="skill-tag">Agile/Scrum</span>
+                        <span class="skill-tag">Prometheus</span>
+                        <span class="skill-tag">Grafana</span>
+                        <span class="skill-tag">Tableau</span>
+                        <span class="skill-tag">SHAP</span>
+                        <span class="skill-tag">Weights & Biases</span>
                     </div>
                 </div>
             </div>
@@ -1122,103 +1343,57 @@
 
     <!-- Experience Section -->
     <section id="experience" class="fade-in">
-        <h2 class="section-title">Professional Experience</h2>
-        <p class="section-subtitle">Building AI solutions that make a difference</p>
+        <h2 class="section-title">Professional Journey</h2>
+        <p class="section-subtitle">Building AI solutions that drive business impact</p>
         
         <div class="experience-timeline">
-            <!-- Wells Fargo Experience -->
+            <!-- Synchrony Financial Experience -->
             <div class="experience-item">
                 <div class="experience-header">
                     <div>
-                        <h3 class="experience-title">Machine Learning Engineer</h3>
-                        <p class="experience-company">Wells Fargo (Contract) - Remote</p>
+                        <h3 class="experience-title">AI/ML Engineer</h3>
+                        <p class="experience-company">Synchrony Financial - Remote</p>
                     </div>
-                    <span class="experience-date">May 2024 - Present</span>
+                    <span class="experience-date">Sep 2024 - Present</span>
                 </div>
                 
                 <div class="impact-metrics">
-                    <span class="metric">📊 92% F1-Score</span>
-                    <span class="metric efficiency">⚡ 87% Faster Queries</span>
-                    <span class="metric cost-savings">💰 40% Cost Reduction</span>
-                    <span class="metric">🎯 89% Accuracy</span>
+                    <span class="metric cost-savings">💰 $180K Annual Savings</span>
+                    <span class="metric">🎯 0.87 AUC</span>
+                    <span class="metric efficiency">⚡ 75% Cost Reduction</span>
+                    <span class="metric">📊 40% Accuracy Boost</span>
                 </div>
 
                 <ul class="experience-bullets">
-                    <li><strong>Text Summarization System:</strong> Architected module using fine-tuned T5, processing 500+ weekly call transcripts via Azure Cognitive Services to identify recurring customer issues with 89% accuracy, reducing manual review by 3 hours weekly</li>
-                    <li><strong>NER Pipeline for Compliance:</strong> Engineered named entity recognition pipeline for regulatory documents using spaCy and domain-adapted BERT with Weights & Biases tracking, extracting entities from 2K+ monthly documents achieving 92% F1-score, deployed via Docker/Kubernetes</li>
-                    <li><strong>Sentiment Analysis Optimization:</strong> Fine-tuned FinBERT on 10K financial conversations, analyzing 15K+ monthly interactions through batch processing with MLflow tracking, improving negative sentiment detection by 31%</li>
-                    <li><strong>RAG System Development:</strong> Built retrieval-augmented generation system using LangChain and Azure OpenAI Service with Pinecone vector database, utilizing DVC for data versioning, handling 200+ test queries with 85% accuracy and 87% reduction in response time</li>
-                    <li><strong>A/B Testing Framework:</strong> Implemented comparison framework for GPT-4 vs Claude API on 100 document samples, conducting statistical analysis that identified 40% cost reduction opportunity while maintaining accuracy</li>
-                    <li><strong>Automated NLP Deployment:</strong> Streamlined pipeline using Azure DevOps and Docker, integrating with MLflow model registry, processing 8K+ documents monthly with 99.9% uptime</li>
-                    <li><strong>Multilingual Analysis:</strong> Built prototype for Spanish customer feedback using mT5, preprocessing 500+ reviews monthly with NLTK, achieving 88% accuracy in sentiment classification</li>
-                    <li><strong>Inference Optimization:</strong> Accelerated latency through batch processing and caching strategies, achieving 3x speed improvement while reducing API costs by 25% on pilot deployment</li>
+                    <li><strong>LLM Cost Optimization:</strong> Slashed costs 75% ($180K annually) by migrating sentiment analysis from GPT-4 to fine-tuned Llama-3.1 via production A/B testing framework, maintaining 95% accuracy</li>
+                    <li><strong>RAG System Architecture:</strong> Improved retrieval accuracy 40% developing Python-based RAG system using LangChain/FAISS on 20K+ financial documents, handling 500+ daily queries</li>
+                    <li><strong>Credit Risk Modeling:</strong> Architected XGBoost/Logistic Regression ensemble achieving 0.87 AUC with SHAP explainability for credit decisions impacting $10M+ monthly approvals</li>
+                    <li><strong>Feature Engineering Pipeline:</strong> Optimized model performance engineering 45 financial features using SQL transformations and PCA selection, improving F1-score by 12%</li>
+                    <li><strong>Production Data Pipeline:</strong> Orchestrated Airflow/AWS Glue pipeline processing 200GB monthly transactions with Delta Lake optimization, reducing processing time 30%</li>
+                    <li><strong>Deployment Acceleration:</strong> Accelerated deployment 30% faster using Kubernetes with CI/CD pipelines (Docker/Terraform), enabling weekly model updates</li>
+                    <li><strong>Infrastructure Optimization:</strong> Cut costs 35% establishing Prometheus/Grafana monitoring for production GPU utilization, identifying and eliminating resource waste</li>
+                    <li><strong>Executive Dashboards:</strong> Delivered Tableau dashboards tracking 12 KPIs including approval rates and default rates for C-suite weekly reviews</li>
                 </ul>
 
                 <div class="tech-stack">
-                    <div class="tech-stack-label">🔧 Technologies & Tools Used:</div>
+                    <div class="tech-stack-label">🔧 Technologies & Tools:</div>
                     <div class="tech-pills">
                         <span class="tech-pill">Python</span>
-                        <span class="tech-pill">T5</span>
-                        <span class="tech-pill">BERT</span>
-                        <span class="tech-pill">FinBERT</span>
-                        <span class="tech-pill">mT5</span>
-                        <span class="tech-pill">spaCy</span>
-                        <span class="tech-pill">LangChain</span>
-                        <span class="tech-pill">Azure Cognitive Services</span>
-                        <span class="tech-pill">Azure OpenAI</span>
-                        <span class="tech-pill">Pinecone</span>
-                        <span class="tech-pill">Docker</span>
-                        <span class="tech-pill">Kubernetes</span>
-                        <span class="tech-pill">MLflow</span>
-                        <span class="tech-pill">Weights & Biases</span>
-                        <span class="tech-pill">DVC</span>
-                        <span class="tech-pill">Azure DevOps</span>
-                        <span class="tech-pill">NLTK</span>
+                        <span class="tech-pill">Llama-3.1</span>
                         <span class="tech-pill">GPT-4</span>
-                        <span class="tech-pill">Claude API</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Unify AI Experience -->
-            <div class="experience-item">
-                <div class="experience-header">
-                    <div>
-                        <h3 class="experience-title">Open-Source ML Engineer</h3>
-                        <p class="experience-company">Unify AI (Ivy Framework - 14.2K+ GitHub Stars) - Remote</p>
-                    </div>
-                    <span class="experience-date">July 2022 - February 2023</span>
-                </div>
-                
-                <div class="impact-metrics">
-                    <span class="metric">⭐ 14.2K+ Stars</span>
-                    <span class="metric efficiency">🚀 3x Performance</span>
-                    <span class="metric">✅ 100% Test Coverage</span>
-                    <span class="metric cost-savings">📉 80% Error Reduction</span>
-                </div>
-
-                <ul class="experience-bullets">
-                    <li><strong>Cross-Framework Standardization:</strong> Standardized backend operations across PyTorch, TensorFlow, and JAX, reducing cross-framework conversion errors by 80% for operations handled through 20+ resolved issues</li>
-                    <li><strong>Neural Network API Development:</strong> Engineered comprehensive API implementing 3 activation functions (ELU, CELU, Mish) with gradient computation support, achieving 100% test coverage</li>
-                    <li><strong>Performance Optimization:</strong> Optimized 12+ numerical computation functions through vectorization and framework-specific improvements, improving performance by 3x and numerical stability</li>
-                    <li><strong>Framework Compatibility:</strong> Resolved array protocol compatibility issues and stochastic operation testing, creating unified seeding mechanism for reproducible tests across frameworks</li>
-                    <li><strong>Transpiler Development:</strong> Contributed to PyTorch backend components for Ivy transpiler enabling TensorFlow to PyTorch model conversion workflows</li>
-                </ul>
-
-                <div class="tech-stack">
-                    <div class="tech-stack-label">🔧 Technologies & Tools Used:</div>
-                    <div class="tech-pills">
-                        <span class="tech-pill">Python</span>
-                        <span class="tech-pill">PyTorch</span>
-                        <span class="tech-pill">TensorFlow</span>
-                        <span class="tech-pill">JAX</span>
-                        <span class="tech-pill">NumPy</span>
-                        <span class="tech-pill">Git/GitHub</span>
-                        <span class="tech-pill">Unit Testing</span>
-                        <span class="tech-pill">CI/CD</span>
-                        <span class="tech-pill">Open Source</span>
-                        <span class="tech-pill">Neural Networks</span>
-                        <span class="tech-pill">Gradient Computation</span>
+                        <span class="tech-pill">LangChain</span>
+                        <span class="tech-pill">FAISS</span>
+                        <span class="tech-pill">XGBoost</span>
+                        <span class="tech-pill">AWS SageMaker</span>
+                        <span class="tech-pill">Airflow</span>
+                        <span class="tech-pill">Delta Lake</span>
+                        <span class="tech-pill">Kubernetes</span>
+                        <span class="tech-pill">Docker</span>
+                        <span class="tech-pill">Terraform</span>
+                        <span class="tech-pill">Prometheus</span>
+                        <span class="tech-pill">Grafana</span>
+                        <span class="tech-pill">SHAP</span>
+                        <span class="tech-pill">Tableau</span>
                     </div>
                 </div>
             </div>
@@ -1227,47 +1402,40 @@
             <div class="experience-item">
                 <div class="experience-header">
                     <div>
-                        <h3 class="experience-title">Data Scientist</h3>
-                        <p class="experience-company">Nifty Labs Pvt Ltd (Pharmaceutical Manufacturer) - Hyderabad, India</p>
+                        <h3 class="experience-title">Machine Learning Engineer</h3>
+                        <p class="experience-company">Nifty Labs Pvt Ltd - Hyderabad, India</p>
                     </div>
-                    <span class="experience-date">September 2021 - May 2023</span>
+                    <span class="experience-date">Sep 2021 - Aug 2023</span>
                 </div>
                 
                 <div class="impact-metrics">
-                    <span class="metric cost-savings">💰 $94,100 Saved</span>
-                    <span class="metric">🛡️ $42,200 Protected</span>
-                    <span class="metric efficiency">⚡ 58% Faster</span>
-                    <span class="metric">📈 697% ROI</span>
+                    <span class="metric efficiency">⚡ 67% Faster Analysis</span>
+                    <span class="metric">📈 92% Accuracy</span>
+                    <span class="metric cost-savings">💰 34% Scrap Reduction</span>
+                    <span class="metric">🚀 37% Time Saved</span>
                 </div>
 
                 <ul class="experience-bullets">
-                    <li><strong>Automated Document Processing:</strong> Pioneered system using BERT and custom NER for 100+ GMP batch records, achieving 89% accuracy while reducing manual review by 40%</li>
-                    <li><strong>Real-time Data Pipeline:</strong> Architected integration of Oracle MES/MySQL LIMS using Apache Airflow, processing 3,456 daily data points with 58% reduction in reporting time</li>
-                    <li><strong>Yield Prediction Model:</strong> Developed Random Forest model on 200+ historical batches achieving 72% accuracy, delivering $36,400 value through 1.8% pharmaceutical API yield improvement</li>
-                    <li><strong>Anomaly Detection System:</strong> Implemented hybrid approach combining Statistical Process Control with Isolation Forest, monitoring 30-second interval sensor data, preventing batch failure worth $42,200</li>
-                    <li><strong>Process Optimization:</strong> Streamlined monitoring using PCA to reduce parameters from 18 to 8 while maintaining 94% correlation, improving operator efficiency by 32% (saving $2,880 annually)</li>
-                    <li><strong>Analytics Dashboards:</strong> Created Tableau dashboards for 6 QC analysts integrating LIMS data, reducing batch review time by 15% and achieving zero critical observations in USFDA audit</li>
-                    <li><strong>Cloud Migration Leadership:</strong> Led AWS migration (S3, Lambda, RDS) reducing infrastructure costs by 30% while establishing MLOps foundation, achieving 697% ROI over 1.75 years ($94,100 total value)</li>
+                    <li><strong>Automated QC System:</strong> Automated material verification cutting analysis time 67% using Random Forest on spectral signatures from 500+ daily samples</li>
+                    <li><strong>Computer Vision Pipeline:</strong> Developed XceptionNet vision system achieving 92% accuracy across 8 defect types, reducing inspection time 37% on production line</li>
+                    <li><strong>Anomaly Detection:</strong> Minimized production scrap 34% deploying Isolation Forest on 24K engineered samples from IoT sensor data streams</li>
+                    <li><strong>NLP Document Processing:</strong> Implemented RoBERTa NLP improving regulatory document mapping 23% over baseline on 10K+ pharmaceutical documents</li>
+                    <li><strong>Model Deployment:</strong> Deployed models via Azure ML with Docker CI/CD reducing deployment latency 35%, enabling rapid iteration cycles</li>
                 </ul>
 
                 <div class="tech-stack">
-                    <div class="tech-stack-label">🔧 Technologies & Tools Used:</div>
+                    <div class="tech-stack-label">🔧 Technologies & Tools:</div>
                     <div class="tech-pills">
                         <span class="tech-pill">Python</span>
-                        <span class="tech-pill">BERT</span>
                         <span class="tech-pill">Random Forest</span>
+                        <span class="tech-pill">XceptionNet</span>
                         <span class="tech-pill">Isolation Forest</span>
-                        <span class="tech-pill">Apache Airflow</span>
-                        <span class="tech-pill">Oracle MES</span>
-                        <span class="tech-pill">MySQL</span>
-                        <span class="tech-pill">PCA</span>
-                        <span class="tech-pill">Statistical Process Control</span>
-                        <span class="tech-pill">Tableau</span>
-                        <span class="tech-pill">AWS S3</span>
-                        <span class="tech-pill">AWS Lambda</span>
-                        <span class="tech-pill">AWS RDS</span>
-                        <span class="tech-pill">NER</span>
-                        <span class="tech-pill">LIMS Integration</span>
+                        <span class="tech-pill">RoBERTa</span>
+                        <span class="tech-pill">Azure ML</span>
+                        <span class="tech-pill">Docker</span>
+                        <span class="tech-pill">CI/CD</span>
+                        <span class="tech-pill">Computer Vision</span>
+                        <span class="tech-pill">IoT Analytics</span>
                     </div>
                 </div>
             </div>
@@ -1276,26 +1444,51 @@
 
     <!-- Projects Section -->
     <section id="projects" class="fade-in">
-        <h2 class="section-title">Featured Projects</h2>
-        <p class="section-subtitle">Real-world applications showcasing my technical expertise</p>
+        <h2 class="section-title">Impact Projects</h2>
+        <p class="section-subtitle">Production systems solving real-world challenges</p>
         
         <div class="projects-grid">
-            <div class="project-card" onclick="window.open('https://github.com/Ajay6601/FraudDetectX', '_blank')">
+            <div class="project-card" onclick="window.open('https://github.com/Ajay6601', '_blank')">
                 <div class="project-header">
-                    <h3>FraudDetectX</h3>
+                    <h3>HealthRAG Platform</h3>
                     <div class="project-tech">
-                        <span class="tech-tag">Kafka</span>
-                        <span class="tech-tag">Spark</span>
-                        <span class="tech-tag">MLflow</span>
-                        <span class="tech-tag">PostgreSQL</span>
-                        <span class="tech-tag">GKE</span>
+                        <span class="tech-tag">RAG</span>
+                        <span class="tech-tag">FastAPI</span>
+                        <span class="tech-tag">Neo4j</span>
+                        <span class="tech-tag">Groq</span>
+                        <span class="tech-tag">Docker</span>
                     </div>
                 </div>
                 <div class="project-body">
                     <p class="project-description">
-                        Built streaming data pipeline processing 220,000+ financial transactions. 
-                        Orchestrated asynchronous ML workflows using Celery and Redis, reducing inference time by 65%. 
-                        Deployed to Google Kubernetes Engine with 70% faster deployment cycles.
+                        HIPAA-ready medical intelligence platform extracting clinical entities with 89% accuracy. 
+                        Neo4j graph connects 15K+ medical concepts, reducing diagnostic lookup by 70%. 
+                        Handles 100+ concurrent requests at sub-200ms latency.
+                    </p>
+                    <div class="project-links">
+                        <a href="https://github.com/Ajay6601" target="_blank" class="project-link">
+                            <span>View on GitHub</span> →
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card" onclick="window.open('https://github.com/Ajay6601/FraudDetectX', '_blank')">
+                <div class="project-header">
+                    <h3>Real-time Fraud Detection</h3>
+                    <div class="project-tech">
+                        <span class="tech-tag">Kafka</span>
+                        <span class="tech-tag">XGBoost</span>
+                        <span class="tech-tag">Spark</span>
+                        <span class="tech-tag">GKE</span>
+                        <span class="tech-tag">Celery</span>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <p class="project-description">
+                        Production pipeline processing 100K transactions achieving 91% F1-score on 0.5% fraud rate. 
+                        Distributed ML infrastructure on GKE sustaining 1K+ TPS with sub-500ms P95 latency.
+                        Reduced inference time by 65% using asynchronous Celery workflows.
                     </p>
                     <div class="project-links">
                         <a href="https://github.com/Ajay6601/FraudDetectX" target="_blank" class="project-link">
@@ -1305,20 +1498,47 @@
                 </div>
             </div>
 
+            <div class="project-card" onclick="window.open('https://github.com/Ajay6601', '_blank')">
+                <div class="project-header">
+                    <h3>VisionLM Infrastructure</h3>
+                    <div class="project-tech">
+                        <span class="tech-tag">PyTorch</span>
+                        <span class="tech-tag">FSDP</span>
+                        <span class="tech-tag">Flash Attention</span>
+                        <span class="tech-tag">ONNX</span>
+                        <span class="tech-tag">vLLM</span>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <p class="project-description">
+                        Distributed training achieving 90% GPU efficiency, reducing cloud costs 45%. 
+                        Boosted training 1.7× on 158K multimodal samples. 5× inference throughput via 
+                        ONNX export and INT8 quantization.
+                    </p>
+                    <div class="project-links">
+                        <a href="https://github.com/Ajay6601" target="_blank" class="project-link">
+                            <span>View on GitHub</span> →
+                        </a>
+                    </div>
+                </div>
+            </div>
+
             <div class="project-card" onclick="window.open('https://github.com/Ajay6601/video-platform', '_blank')">
                 <div class="project-header">
-                    <h3>Video Platform</h3>
+                    <h3>Video Streaming Platform</h3>
                     <div class="project-tech">
                         <span class="tech-tag">React</span>
                         <span class="tech-tag">Node.js</span>
                         <span class="tech-tag">MongoDB</span>
                         <span class="tech-tag">WebRTC</span>
+                        <span class="tech-tag">HLS</span>
                     </div>
                 </div>
                 <div class="project-body">
                     <p class="project-description">
-                        Full-stack video streaming platform with real-time features. Implemented adaptive bitrate streaming 
-                        and content recommendation system using collaborative filtering.
+                        Full-stack video platform with adaptive bitrate streaming and real-time features. 
+                        Implemented content recommendation using collaborative filtering achieving 78% click-through rate.
+                        Supports 500+ concurrent streams with WebRTC integration.
                     </p>
                     <div class="project-links">
                         <a href="https://github.com/Ajay6601/video-platform" target="_blank" class="project-link">
@@ -1335,13 +1555,15 @@
                         <span class="tech-tag">WebSockets</span>
                         <span class="tech-tag">Redis</span>
                         <span class="tech-tag">React</span>
+                        <span class="tech-tag">CRDT</span>
                         <span class="tech-tag">Node.js</span>
                     </div>
                 </div>
                 <div class="project-body">
                     <p class="project-description">
-                        Real-time collaborative document editing platform with conflict resolution. 
-                        Features include version control, user presence indicators, and automatic saving.
+                        Real-time collaborative document editor with operational transformation for conflict resolution. 
+                        Supports 50+ simultaneous editors with version control and automatic saving.
+                        Sub-100ms sync latency using WebSocket connections.
                     </p>
                     <div class="project-links">
                         <a href="https://github.com/Ajay6601/doccollab" target="_blank" class="project-link">
@@ -1353,18 +1575,20 @@
 
             <div class="project-card" onclick="window.open('https://github.com/Ajay6601/Ecommerce-Analytics', '_blank')">
                 <div class="project-header">
-                    <h3>E-commerce Analytics</h3>
+                    <h3>E-commerce Analytics Engine</h3>
                     <div class="project-tech">
                         <span class="tech-tag">PySpark</span>
                         <span class="tech-tag">ML Pipeline</span>
                         <span class="tech-tag">Tableau</span>
                         <span class="tech-tag">AWS</span>
+                        <span class="tech-tag">Prophet</span>
                     </div>
                 </div>
                 <div class="project-body">
                     <p class="project-description">
-                        Advanced analytics platform with customer segmentation, churn prediction, 
-                        and recommendation engine. Processes millions of transactions for actionable insights.
+                        Analytics platform processing 10M+ transactions for customer segmentation and churn prediction.
+                        Achieved 85% accuracy in predicting customer lifetime value. 
+                        Recommendation engine increased revenue per user by 23%.
                     </p>
                     <div class="project-links">
                         <a href="https://github.com/Ajay6601/Ecommerce-Analytics" target="_blank" class="project-link">
@@ -1376,18 +1600,20 @@
 
             <div class="project-card" onclick="window.open('https://github.com/Ajay6601/kubernetes-mlops', '_blank')">
                 <div class="project-header">
-                    <h3>Kubernetes MLOps</h3>
+                    <h3>Kubernetes MLOps Pipeline</h3>
                     <div class="project-tech">
                         <span class="tech-tag">Kubernetes</span>
-                        <span class="tech-tag">Docker</span>
                         <span class="tech-tag">ArgoCD</span>
                         <span class="tech-tag">MLflow</span>
+                        <span class="tech-tag">Kubeflow</span>
+                        <span class="tech-tag">GitOps</span>
                     </div>
                 </div>
                 <div class="project-body">
                     <p class="project-description">
                         End-to-end MLOps pipeline with automated model training, versioning, and deployment. 
-                        Features GitOps workflow with ArgoCD for continuous delivery.
+                        GitOps workflow with ArgoCD enables zero-downtime deployments. 
+                        Reduced model deployment time from days to hours with automated CI/CD.
                     </p>
                     <div class="project-links">
                         <a href="https://github.com/Ajay6601/kubernetes-mlops" target="_blank" class="project-link">
@@ -1399,21 +1625,49 @@
 
             <div class="project-card" onclick="window.open('https://github.com/Ajay6601/remotesync', '_blank')">
                 <div class="project-header">
-                    <h3>RemoteSync</h3>
+                    <h3>RemoteSync System</h3>
                     <div class="project-tech">
-                        <span class="tech-tag">Distributed Systems</span>
-                        <span class="tech-tag">gRPC</span>
                         <span class="tech-tag">Go</span>
+                        <span class="tech-tag">gRPC</span>
+                        <span class="tech-tag">Raft</span>
+                        <span class="tech-tag">Protocol Buffers</span>
+                        <span class="tech-tag">Delta Sync</span>
                     </div>
                 </div>
                 <div class="project-body">
                     <p class="project-description">
-                        Distributed file synchronization system with conflict resolution and efficient delta sync. 
-                        Implements custom consensus algorithm for consistency across nodes.
+                        Distributed file synchronization with custom consensus algorithm for conflict resolution.
+                        Implements efficient delta sync reducing bandwidth usage by 85%.
+                        Handles network partitions with eventual consistency guarantee.
                     </p>
                     <div class="project-links">
                         <a href="https://github.com/Ajay6601/remotesync" target="_blank" class="project-link">
                             <span>View on GitHub</span> →
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card" onclick="window.open('https://github.com/Ajay6601', '_blank')">
+                <div class="project-header">
+                    <h3>Open Source Contributions</h3>
+                    <div class="project-tech">
+                        <span class="tech-tag">Ivy ML</span>
+                        <span class="tech-tag">PyTorch</span>
+                        <span class="tech-tag">TensorFlow</span>
+                        <span class="tech-tag">JAX</span>
+                        <span class="tech-tag">14.2K⭐</span>
+                    </div>
+                </div>
+                <div class="project-body">
+                    <p class="project-description">
+                        20+ merged PRs to Ivy ML Framework (14.2K+ stars). Standardized backend operations across 
+                        PyTorch, TensorFlow, and JAX. Optimized 12+ numerical functions achieving 3× performance improvement.
+                        Contributed to framework transpiler enabling cross-framework model conversion.
+                    </p>
+                    <div class="project-links">
+                        <a href="https://github.com/unifyai/ivy" target="_blank" class="project-link">
+                            <span>View Contributions</span> →
                         </a>
                     </div>
                 </div>
@@ -1424,7 +1678,7 @@
     <!-- Education Section -->
     <section id="education" class="fade-in">
         <h2 class="section-title">Education</h2>
-        <p class="section-subtitle">Building a strong foundation for innovation</p>
+        <p class="section-subtitle">Building expertise at the intersection of AI and business</p>
         
         <div class="education-card">
             <h3>Master of Science in Information Systems</h3>
@@ -1436,9 +1690,9 @@
     <!-- Contact Section -->
     <footer id="contact">
         <div class="footer-content">
-            <h2 style="font-size: 2rem; margin-bottom: 1rem;">Let's Connect</h2>
+            <h2 style="font-size: 2rem; margin-bottom: 1rem;">Let's Build Something Amazing</h2>
             <p style="margin-bottom: 2rem; opacity: 0.9;">
-                I'm always interested in discussing ML/AI opportunities and challenging projects
+                Looking for an ML Engineer who delivers measurable business impact? Let's connect.
             </p>
             <div class="footer-links">
                 <a href="mailto:desireddyajay@gmail.com">✉ Email</a>
@@ -1446,7 +1700,7 @@
                 <a href="https://github.com/Ajay6601" target="_blank">⚡ GitHub</a>
             </div>
             <p style="margin-top: 3rem; opacity: 0.7;">
-                © 2024 Ajay Sai Reddy Desireddy. Built with passion for ML.
+                © 2024 Ajay Sai Reddy Desireddy. Transforming data into decisions.
             </p>
         </div>
     </footer>
